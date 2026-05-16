@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>鐞宠敁銇煃?- 缇庨杞洏</title>
+    <title>琳蔓の🍳 - 美食转盘</title>
     <style>
         * {
             margin: 0;
@@ -100,7 +100,7 @@
 
         .header::before,
         .header::after {
-            content: '馃崪';
+            content: '🍜';
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -109,7 +109,7 @@
         }
 
         .header::before { left: 0; }
-        .header::after { right: 0; content: '馃嵆'; }
+        .header::after { right: 0; content: '🍳'; }
 
         h1 {
             font-size: 2.2em;
@@ -536,31 +536,31 @@
 
     <div class="page">
         <div class="header">
-            <h1>鐞宠敁銇煃?/h1>
-            <p class="subtitle">杞竴杞紝浠婂ぉ鍚冧粈涔?鉁?/p>
+            <h1>琳蔓の🍳</h1>
+            <p class="subtitle">转一转，今天吃什么 ✨</p>
         </div>
 
         <div class="wheel-section">
             <div class="wheel-container">
                 <div class="pointer"></div>
                 <div class="wheel" id="wheel"></div>
-                <button class="center-btn" onclick="spin()">寮€濮?/button>
+                <button class="center-btn" onclick="spin()">开始</button>
             </div>
         </div>
 
         <button class="spin-btn" id="spinBtn" onclick="spin()">
-            <span>馃幉</span>
-            <span>杞姩杞洏</span>
+            <span>🎲</span>
+            <span>转动转盘</span>
         </button>
 
-        <div class="result-card" id="result">馃憞 鐐瑰嚮涓婃柟鎸夐挳寮€濮?/div>
+        <div class="result-card" id="result">👇 点击上方按钮开始</div>
 
-        <div class="divider">馃崪 椋熺墿鍒楄〃 馃嵅</div>
+        <div class="divider">🍜 食物列表 🍲</div>
 
         <div class="panel open" id="listPanel">
             <div class="panel-header" onclick="togglePanel('listPanel')">
-                <div class="panel-header-left"><span>馃搵</span><span>鎴戠殑鑿滃崟</span></div>
-                <span class="panel-arrow">鈻?/span>
+                <div class="panel-header-left"><span>📋</span><span>我的菜单</span></div>
+                <span class="panel-arrow">▼</span>
             </div>
             <div class="panel-body">
                 <div class="panel-content">
@@ -571,19 +571,19 @@
 
         <div class="panel" id="editPanel">
             <div class="panel-header" onclick="togglePanel('editPanel')">
-                <div class="panel-header-left"><span>鉁忥笍</span><span>绠＄悊鑿滃崟</span></div>
-                <span class="panel-arrow">鈻?/span>
+                <div class="panel-header-left"><span>✏️</span><span>管理菜单</span></div>
+                <span class="panel-arrow">▼</span>
             </div>
             <div class="panel-body">
                 <div class="panel-content">
                     <div class="input-row">
-                        <input type="text" class="food-input" id="newFoodInput" placeholder="杈撳叆椋熺墿鍚嶇О...">
-                        <button class="act-btn act-add" onclick="addFood()">鉃?/button>
+                        <input type="text" class="food-input" id="newFoodInput" placeholder="输入食物名称...">
+                        <button class="act-btn act-add" onclick="addFood()">➕</button>
                     </div>
                     <div class="btn-grid">
-                        <button class="act-btn act-reset" onclick="resetFoods()">馃攧 閲嶇疆</button>
-                        <button class="act-btn act-export" onclick="exportConfig()">馃摛 瀵煎嚭</button>
-                        <button class="act-btn act-import" onclick="document.getElementById('importInput').click()">馃摜 瀵煎叆</button>
+                        <button class="act-btn act-reset" onclick="resetFoods()">🔄 重置</button>
+                        <button class="act-btn act-export" onclick="exportConfig()">📤 导出</button>
+                        <button class="act-btn act-import" onclick="document.getElementById('importInput').click()">📥 导入</button>
                     </div>
                     <input type="file" id="importInput" class="hidden" accept=".json" onchange="importConfig(event)">
                 </div>
@@ -591,24 +591,24 @@
         </div>
 
         <div class="tip">
-            馃崈 鏁版嵁浠呭瓨浜庢湰娴忚鍣?路 鎹㈣澶囦細涓㈠け<br>
-            馃摛 瀵煎嚭閰嶇疆鍙垎浜粰鏈嬪弸 路 寤鸿瀹氭湡澶囦唤
+            🍃 数据仅存于本浏览器 · 换设备会丢失<br>
+            📤 导出配置可分享给朋友 · 建议定期备份
         </div>
     </div>
 
-    <div class="bg-tag" id="bgTag">馃帹 鑷姩鎹㈣偆</div>
+    <div class="bg-tag" id="bgTag">🎨 自动换肤</div>
 
     <script>
         const DEFAULT_FOODS = [
-            '缇婅倝闈煃?, '楦″叕鐓拆煃?, '姹夊牎馃崝', '楦℃帓馃崡',
-            '瀵垮徃馃崳', '鍗ら潰馃崪', '涓蹭覆馃崲', '閰歌荆绮夝煂讹笍',
-            '鍑夌毊馃', '绮ヰ煡?, '棣勯エ馃', '澶栧﹩鍛抽亾馃懙',
-            '鐑ら奔馃悷', '鐩栭キ馃崨', '鑳¤荆姹ゐ煂讹笍', '鐏攨馃嵅',
-            '楹昏荆鐑煂讹笍', '鎶惃馃崟', '鐐搁浮馃崡', '鎷夐潰馃崪',
-            '楗哄瓙馃', '鐐掗キ馃崨', '绫崇嚎馃崪', '鐑х儰馃崲'
+            '羊肉面🍜', '鸡公煲🍲', '汉堡🍔', '鸡排🍗',
+            '寿司🍣', '卤面🍜', '串串🍢', '酸辣粉🌶️',
+            '凉皮🥒', '粥🥣', '馄饨🥟', '外婆味道👵',
+            '烤鱼🐟', '盖饭🍛', '胡辣汤🌶️', '火锅🍲',
+            '麻辣烫🌶️', '披萨🍕', '炸鸡🍗', '拉面🍜',
+            '饺子🥟', '炒饭🍛', '米线🍜', '烧烤🍢'
         ];
 
-        const FOOD_WEIGHTS = { '缇婅倝闈煃?: 2 };
+        const FOOD_WEIGHTS = { '羊肉面🍜': 2 };
 
         let foods = [];
         let isSpinning = false;
@@ -645,10 +645,10 @@
         ];
 
         const foodEmojis = [
-            '馃嵆', '馃崪', '馃嵅', '馃嵄', '馃崳', '馃崟', '馃崝', '馃尞',
-            '馃', '馃崫', '馃', '馃', '馃崨', '馃', '馃ァ', '馃',
-            '馃崡', '馃崠', '馃ォ', '馃尛', '馃オ', '馃カ', '馃ィ', '馃ェ',
-            '馃嵃', '馃巶', '馃', '馃崻', '鈽?, '馃嵉', '馃イ', '馃嵑'
+            '🍳', '🍜', '🍲', '🍱', '🍣', '🍕', '🍔', '🌮',
+            '🥗', '🍝', '🥘', '🥙', '🍛', '🥟', '🥡', '🥠',
+            '🍗', '🍖', '🥩', '🌭', '🥪', '🥫', '🥣', '🥧',
+            '🍰', '🎂', '🧁', '🍪', '☕', '🍵', '🥤', '🍺'
         ];
 
         function generateUserId() {
@@ -714,8 +714,8 @@
             currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
             document.body.style.background = backgrounds[currentBgIndex];
             const tag = document.getElementById('bgTag');
-            tag.textContent = `馃帹 ${currentBgIndex + 1}/${backgrounds.length}`;
-            setTimeout(() => { tag.textContent = '馃帹 鑷姩鎹㈣偆'; }, 3000);
+            tag.textContent = `🎨 ${currentBgIndex + 1}/${backgrounds.length}`;
+            setTimeout(() => { tag.textContent = '🎨 自动换肤'; }, 3000);
         }
 
         function createWheel() {
@@ -741,17 +741,17 @@
         function updateFoodListDisplay() {
             const d = document.getElementById('foodListDisplay');
             d.innerHTML = foods.map((f, i) =>
-                `<div class="food-chip"><span>${f}</span><button class="del-btn" onclick="deleteFood(${i})">脳</button></div>`
+                `<div class="food-chip"><span>${f}</span><button class="del-btn" onclick="deleteFood(${i})">×</button></div>`
             ).join('');
         }
 
         function deleteFood(i) {
-            if (foods.length <= 2) { showToast('鈿狅笍 鑷冲皯淇濈暀2涓?); return; }
+            if (foods.length <= 2) { showToast('⚠️ 至少保留2个'); return; }
             const f = foods[i];
             foods.splice(i, 1);
             saveFoods();
             createWheel();
-            showToast(`馃棏锔?${f}`);
+            showToast(`🗑️ ${f}`);
         }
 
         function spin() {
@@ -760,7 +760,7 @@
             const btn = document.getElementById('spinBtn');
             const res = document.getElementById('result');
             btn.disabled = true;
-            res.textContent = '馃幇 杞姩涓?..';
+            res.textContent = '🎰 转动中...';
             res.classList.remove('highlight');
 
             const ri = weightedRandomIndex();
@@ -772,7 +772,7 @@
             document.getElementById('wheel').style.transform = `rotate(${currentRotation}deg)`;
 
             setTimeout(() => {
-                res.textContent = `馃帀 浠婂ぉ鍚?${foods[ri]}锛乣;
+                res.textContent = `🎉 今天吃 ${foods[ri]}！`;
                 res.classList.add('highlight');
                 btn.disabled = false;
                 isSpinning = false;
@@ -798,35 +798,35 @@
                 saveFoods();
                 createWheel();
                 inp.value = '';
-                showToast(`鉁?${v}`);
+                showToast(`✅ ${v}`);
             } else if (foods.includes(v)) {
-                showToast('鈿狅笍 宸插瓨鍦?);
+                showToast('⚠️ 已存在');
             } else {
-                showToast('鈿狅笍 璇疯緭鍏ュ悕绉?);
+                showToast('⚠️ 请输入名称');
             }
         }
 
         function resetFoods() {
-            if (confirm('閲嶇疆涓洪粯璁ゅ垪琛紵')) {
+            if (confirm('重置为默认列表？')) {
                 foods = [...DEFAULT_FOODS];
                 saveFoods();
                 createWheel();
-                showToast('馃攧 宸查噸缃?);
+                showToast('🔄 已重置');
             }
         }
 
         function exportConfig() {
-            const cfg = { version: '3.0', time: new Date().toISOString(), foods, note: '鐞宠敁銇煃? };
+            const cfg = { version: '3.0', time: new Date().toISOString(), foods, note: '琳蔓の🍳' };
             const blob = new Blob([JSON.stringify(cfg, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `鐞宠敁缇庨_${new Date().toISOString().slice(0, 10)}.json`;
+            a.download = `琳蔓美食_${new Date().toISOString().slice(0, 10)}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            showToast('馃摛 宸插鍑?);
+            showToast('📤 已导出');
         }
 
         function importConfig(event) {
@@ -836,15 +836,15 @@
             reader.onload = function (e) {
                 try {
                     const cfg = JSON.parse(e.target.result);
-                    if (!cfg.foods || !Array.isArray(cfg.foods)) throw new Error('鏍煎紡閿欒');
-                    if (confirm(`瀵煎叆 ${cfg.foods.length} 椤癸紵`)) {
+                    if (!cfg.foods || !Array.isArray(cfg.foods)) throw new Error('格式错误');
+                    if (confirm(`导入 ${cfg.foods.length} 项？`)) {
                         foods = cfg.foods;
                         saveFoods();
                         createWheel();
-                        showToast(`馃摜 ${foods.length} 椤瑰凡瀵煎叆`);
+                        showToast(`📥 ${foods.length} 项已导入`);
                     }
                 } catch (err) {
-                    showToast('鉂?' + err.message);
+                    showToast('❌ ' + err.message);
                 }
             };
             reader.readAsText(file);
