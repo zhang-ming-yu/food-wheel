@@ -2,139 +2,157 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>琳蔓の🍳 - 独立美食转盘</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>鐞宠敁銇煃?- 缇庨杞洏</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        body {
-            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --glass: rgba(255, 255, 255, 0.12);
+            --glass-strong: rgba(255, 255, 255, 0.18);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text: #ffffff;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --r-sm: 14px;
+            --r-md: 20px;
+        }
+
+        html, body {
+            height: 100%;
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            z-index: -2;
-            transition: opacity 2s ease-in-out;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            position: relative;
+            transition: background 1.5s ease-in-out;
+            color: var(--text);
         }
 
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: -1;
-        }
-
-        .floating-elements {
+        .floating-foods {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
+            z-index: 0;
             overflow: hidden;
         }
 
-        .floating-element {
+        .food-particle {
             position: absolute;
-            font-size: 30px;
-            opacity: 0.3;
-            animation: float 15s infinite ease-in-out;
+            opacity: 0.2;
+            animation: drift 25s infinite ease-in-out;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
+        .food-particle.layer-far {
+            filter: blur(1.5px);
+            opacity: 0.12;
         }
 
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            max-width: 650px;
+        .food-particle.layer-mid {
+            filter: blur(0.5px);
+            opacity: 0.18;
+        }
+
+        .food-particle.layer-near {
+            opacity: 0.28;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            20% { transform: translate(15px, -30px) rotate(72deg); }
+            40% { transform: translate(-10px, -50px) rotate(144deg); }
+            60% { transform: translate(20px, -25px) rotate(216deg); }
+            80% { transform: translate(-15px, -45px) rotate(288deg); }
+        }
+
+        .page {
             width: 100%;
+            max-width: 500px;
+            padding: 20px 16px 80px;
             position: relative;
-            backdrop-filter: blur(10px);
-            animation: fadeInUp 0.8s ease-out;
+            z-index: 1;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
         }
+
+        .header::before,
+        .header::after {
+            content: '馃崪';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            opacity: 0.5;
+        }
+
+        .header::before { left: 0; }
+        .header::after { right: 0; content: '馃嵆'; }
 
         h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.8em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .user-info {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            color: #666;
-            margin-bottom: 10px;
-            border: 1px solid #667eea30;
+            font-size: 2.2em;
+            font-weight: 800;
+            color: var(--text);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3), 0 0 40px rgba(102, 126, 234, 0.5);
+            letter-spacing: -0.02em;
         }
 
         .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
+            font-size: 0.82em;
+            color: rgba(255, 255, 255, 0.75);
+            text-shadow: var(--shadow);
+            margin-top: 4px;
+        }
+
+        .wheel-section {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto 16px;
         }
 
         .wheel-container {
             position: relative;
-            width: 400px;
-            height: 400px;
-            margin: 30px auto;
+            width: 100%;
+            padding-bottom: 100%;
         }
 
         .wheel {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(102, 126, 234, 0.5), 
-                        0 0 0 10px #fff,
-                        0 0 0 15px rgba(102, 126, 234, 0.8),
-                        0 0 60px rgba(102, 126, 234, 0.3);
+            box-shadow:
+                0 0 0 6px rgba(255, 255, 255, 0.8),
+                0 0 0 9px rgba(102, 126, 234, 0.35),
+                0 0 36px rgba(102, 126, 234, 0.4),
+                inset 0 0 24px rgba(0, 0, 0, 0.12);
             transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            overflow: hidden;
         }
 
         .wheel-segment {
@@ -152,320 +170,445 @@
 
         .wheel-segment span {
             position: absolute;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 12px;
+            font-weight: 700;
             color: #fff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            transform: rotate(-22.5deg) translateY(-80px);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
             white-space: nowrap;
         }
 
         .pointer {
             position: absolute;
-            top: -20px;
+            top: -6px;
             left: 50%;
             transform: translateX(-50%);
+            z-index: 10;
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+        }
+
+        .pointer::before {
+            content: '';
+            display: block;
             width: 0;
             height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 40px solid #ff6b6b;
-            z-index: 10;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-top: 34px solid #ff6b6b;
         }
 
         .pointer::after {
             content: '';
             position: absolute;
-            top: -40px;
+            top: -34px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             background: #ff6b6b;
             border-radius: 50%;
         }
 
-        .center-circle {
+        .center-btn {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border-radius: 50%;
             z-index: 5;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+            cursor: pointer;
+            border: none;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        .spin-button {
+        .center-btn:active {
+            transform: translate(-50%, -50%) scale(0.93);
+        }
+
+        .spin-btn {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 16px;
+            display: flex;
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
             color: white;
             border: none;
-            padding: 15px 50px;
-            font-size: 1.3em;
-            border-radius: 50px;
+            padding: 15px 0;
+            font-size: 1.1em;
+            font-weight: 700;
+            border-radius: var(--r-md);
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(238, 90, 111, 0.4);
-            transition: all 0.3s ease;
-            font-weight: bold;
-            margin-top: 20px;
+            box-shadow: 0 6px 24px rgba(238, 90, 111, 0.4);
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
         }
 
-        .spin-button:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(238, 90, 111, 0.5);
+        .spin-btn:active:not(:disabled) {
+            transform: scale(0.97);
         }
 
-        .spin-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
+        .spin-btn:disabled {
+            background: linear-gradient(135deg, rgba(160, 174, 192, 0.6), rgba(113, 128, 150, 0.6));
+            box-shadow: none;
         }
 
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
+        .result-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+            backdrop-filter: blur(12px);
+            border-radius: var(--r-md);
+            padding: 16px;
             color: white;
-            font-size: 1.5em;
-            font-weight: bold;
-            min-height: 70px;
+            font-size: 1.2em;
+            font-weight: 700;
+            min-height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: breathe 2.5s ease-in-out infinite;
         }
 
-        .food-list {
-            margin-top: 30px;
-            text-align: left;
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.015); }
         }
 
-        .food-list h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.2em;
+        .result-card.highlight {
+            animation: pop 0.4s ease-in-out 3;
         }
 
-        .food-items {
+        @keyframes pop {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        .divider {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 10px;
+            margin: 18px 0 14px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
         }
 
-        .food-item {
-            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            color: #555;
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .panel {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--r-md);
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .panel-header-left {
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s ease;
-            cursor: default;
+            font-weight: 700;
+            font-size: 0.95em;
+            text-shadow: var(--shadow);
         }
 
-        .food-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        .panel-arrow {
+            font-size: 12px;
+            transition: transform 0.3s;
+            opacity: 0.6;
         }
 
-        .food-item .delete-btn {
-            background: #ff6b6b;
+        .panel.open .panel-arrow {
+            transform: rotate(180deg);
+        }
+
+        .panel-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .panel.open .panel-body {
+            max-height: 600px;
+        }
+
+        .panel-content {
+            padding: 0 16px 16px;
+        }
+
+        .food-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .food-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.18);
+            padding: 7px 12px;
+            border-radius: 16px;
+            font-size: 0.85em;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            transition: background 0.2s;
+        }
+
+        .food-chip:active {
+            background: rgba(255, 255, 255, 0.28);
+        }
+
+        .del-btn {
+            background: rgba(255, 107, 107, 0.8);
             color: white;
             border: none;
             width: 20px;
             height: 20px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            opacity: 0.7;
+            font-weight: 700;
         }
 
-        .food-item .delete-btn:hover {
-            background: #ee5a6f;
-            opacity: 1;
-            transform: scale(1.1);
-        }
+        .del-btn:active { transform: scale(1.15); }
 
-        .edit-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px dashed #ddd;
-        }
-
-        .edit-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .edit-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1em;
-            margin-bottom: 10px;
-            transition: border-color 0.3s;
-        }
-
-        .edit-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .edit-buttons {
+        .input-row {
             display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
-        .edit-btn {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: all 0.3s;
-        }
-
-        .add-btn { background: #4CAF50; color: white; }
-        .add-btn:hover { background: #45a049; }
-        
-        .reset-btn { background: #ff9800; color: white; }
-        .reset-btn:hover { background: #e68900; }
-
-        .export-btn { background: #2196F3; color: white; }
-        .export-btn:hover { background: #1976D2; }
-
-        .import-btn { background: #9C27B0; color: white; }
-        .import-btn:hover { background: #7B1FA2; }
-
-        .background-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px 20px;
-            border-radius: 20px;
+        .food-input {
+            flex: 1;
+            padding: 11px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--r-md);
             font-size: 0.9em;
-            color: #666;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text);
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .food-input::placeholder {
+            color: rgba(255, 255, 255, 0.55);
         }
 
-        .result.highlight { animation: pulse 0.5s ease-in-out 3; }
+        .food-input:focus {
+            outline: none;
+            border-color: rgba(102, 126, 234, 0.5);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .act-btn {
+            padding: 11px 0;
+            border: none;
+            border-radius: var(--r-md);
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            transition: transform 0.15s;
+        }
+
+        .act-btn:active { transform: scale(0.96); }
+
+        .act-add { background: linear-gradient(135deg, rgba(72, 187, 120, 0.8), rgba(56, 161, 105, 0.8)); }
+        .act-reset { background: linear-gradient(135deg, rgba(237, 137, 54, 0.8), rgba(221, 107, 32, 0.8)); }
+        .act-export { background: linear-gradient(135deg, rgba(66, 153, 225, 0.8), rgba(49, 130, 206, 0.8)); }
+        .act-import { background: linear-gradient(135deg, rgba(159, 122, 234, 0.8), rgba(128, 93, 213, 0.8)); }
+
+        .tip {
+            text-align: center;
+            font-size: 0.78em;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.6;
+            padding: 12px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        .bg-tag {
+            position: fixed;
+            bottom: 16px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 6px 12px;
+            border-radius: 14px;
+            font-size: 0.75em;
+            color: rgba(255, 255, 255, 0.7);
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
 
         .toast {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #333;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 30, 50, 0.92);
+            backdrop-filter: blur(12px);
             color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            padding: 12px 22px;
+            border-radius: var(--r-md);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
             z-index: 9999;
-            animation: slideIn 0.3s ease-out;
-            max-width: 300px;
+            animation: toastSlide 0.25s ease-out;
+            font-weight: 600;
+            font-size: 0.9em;
+            max-width: 88%;
+            text-align: center;
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        @keyframes toastSlide {
+            from { opacity: 0; transform: translateX(-50%) translateY(-16px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
-        .hidden-input {
-            display: none;
+        .hidden { display: none; }
+
+        @media (max-width: 400px) {
+            .page { padding: 16px 10px 70px; }
+            h1 { font-size: 1.9em; }
+            .wheel-section { max-width: 270px; }
+            .wheel-segment span { font-size: 10px; }
+            .center-btn { width: 56px; height: 56px; font-size: 12px; }
+            .spin-btn { padding: 13px 0; font-size: 1em; }
+            .result-card { font-size: 1.05em; padding: 14px; }
+            .btn-grid { grid-template-columns: 1fr; }
         }
 
-        @media (max-width: 500px) {
-            .wheel-container { width: 300px; height: 300px; }
-            h1 { font-size: 2em; }
-            .wheel-segment span { font-size: 12px; transform: rotate(-22.5deg) translateY(-60px); }
-            .center-circle { width: 60px; height: 60px; font-size: 12px; }
-            .background-indicator { font-size: 0.8em; padding: 8px 15px; }
-            .edit-buttons { flex-direction: column; }
-            .edit-btn { width: 100%; }
+        @media (min-width: 768px) {
+            .page { padding: 32px 24px 80px; }
+            h1 { font-size: 2.8em; }
+            .wheel-section { max-width: 360px; }
+            .wheel-segment span { font-size: 14px; }
+            .center-btn { width: 76px; height: 76px; font-size: 15px; }
         }
     </style>
 </head>
 <body>
-    <div class="floating-elements" id="floatingElements"></div>
-    
-    <div class="container">
-        <h1>琳蔓の🍳</h1>
-        <div class="user-info" id="userInfo">👤 用户ID：加载中...</div>
-        <p class="subtitle">你的专属美食转盘 · 数据独立保存</p>
-        
-        <div class="wheel-container">
-            <div class="pointer"></div>
-            <div class="wheel" id="wheel"></div>
-            <div class="center-circle">开始</div>
-        </div>
-        
-        <button class="spin-button" id="spinBtn" onclick="spin()">🎲 转动转盘</button>
-        
-        <div class="result" id="result">点击按钮开始抽取</div>
-        
-        <div class="food-list">
-            <h3>📋 我的食物列表（仅自己可见）</h3>
-            <div class="food-items" id="foodListDisplay"></div>
-        </div>
-        
-        <div class="edit-section">
-            <h3>✏️ 管理我的菜单</h3>
-            <input type="text" class="edit-input" id="newFoodInput" placeholder="输入新的食物名称（可带emoji）...">
-            
-            <div class="edit-buttons">
-                <button class="edit-btn add-btn" onclick="addFood()">➕ 添加</button>
-                <button class="edit-btn reset-btn" onclick="resetFoods()">🔄 重置</button>
-                <button class="edit-btn export-btn" onclick="exportConfig()">📤 导出配置</button>
-                <button class="edit-btn import-btn" onclick="document.getElementById('importInput').click()">📥 导入配置</button>
-            </div>
-            <input type="file" id="importInput" class="hidden-input" accept=".json" onchange="importConfig(event)">
+    <div class="floating-foods" id="floatingFoods"></div>
+
+    <div class="page">
+        <div class="header">
+            <h1>鐞宠敁銇煃?/h1>
+            <p class="subtitle">杞竴杞紝浠婂ぉ鍚冧粈涔?鉁?/p>
         </div>
 
-        <div style="margin-top: 20px; padding: 15px; background: #f0f8ff; border-radius: 10px; font-size: 0.9em; color: #555;">
-            💡 <strong>提示：</strong><br>
-            • 你的数据保存在本浏览器中，其他人看不到<br>
-            • 可以导出配置文件分享给朋友<br>
-            • 换电脑/清除浏览器数据会丢失，建议定期导出备份
+        <div class="wheel-section">
+            <div class="wheel-container">
+                <div class="pointer"></div>
+                <div class="wheel" id="wheel"></div>
+                <button class="center-btn" onclick="spin()">寮€濮?/button>
+            </div>
+        </div>
+
+        <button class="spin-btn" id="spinBtn" onclick="spin()">
+            <span>馃幉</span>
+            <span>杞姩杞洏</span>
+        </button>
+
+        <div class="result-card" id="result">馃憞 鐐瑰嚮涓婃柟鎸夐挳寮€濮?/div>
+
+        <div class="divider">馃崪 椋熺墿鍒楄〃 馃嵅</div>
+
+        <div class="panel open" id="listPanel">
+            <div class="panel-header" onclick="togglePanel('listPanel')">
+                <div class="panel-header-left"><span>馃搵</span><span>鎴戠殑鑿滃崟</span></div>
+                <span class="panel-arrow">鈻?/span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-content">
+                    <div class="food-chips" id="foodListDisplay"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="editPanel">
+            <div class="panel-header" onclick="togglePanel('editPanel')">
+                <div class="panel-header-left"><span>鉁忥笍</span><span>绠＄悊鑿滃崟</span></div>
+                <span class="panel-arrow">鈻?/span>
+            </div>
+            <div class="panel-body">
+                <div class="panel-content">
+                    <div class="input-row">
+                        <input type="text" class="food-input" id="newFoodInput" placeholder="杈撳叆椋熺墿鍚嶇О...">
+                        <button class="act-btn act-add" onclick="addFood()">鉃?/button>
+                    </div>
+                    <div class="btn-grid">
+                        <button class="act-btn act-reset" onclick="resetFoods()">馃攧 閲嶇疆</button>
+                        <button class="act-btn act-export" onclick="exportConfig()">馃摛 瀵煎嚭</button>
+                        <button class="act-btn act-import" onclick="document.getElementById('importInput').click()">馃摜 瀵煎叆</button>
+                    </div>
+                    <input type="file" id="importInput" class="hidden" accept=".json" onchange="importConfig(event)">
+                </div>
+            </div>
+        </div>
+
+        <div class="tip">
+            馃崈 鏁版嵁浠呭瓨浜庢湰娴忚鍣?路 鎹㈣澶囦細涓㈠け<br>
+            馃摛 瀵煎嚭閰嶇疆鍙垎浜粰鏈嬪弸 路 寤鸿瀹氭湡澶囦唤
         </div>
     </div>
 
-    <input type="file" id="importInput" class="hidden-input" accept=".json" onchange="importConfig(event)">
-    
-    <div class="background-indicator" id="bgIndicator">🎨 背景自动切换中...</div>
+    <div class="bg-tag" id="bgTag">馃帹 鑷姩鎹㈣偆</div>
 
     <script>
         const DEFAULT_FOODS = [
-            '羊肉面🍜', '鸡公煲🍲', '汉堡🍔', '鸡排🍗',
-            '寿司🍣', '卤面🍜', '串串🍢', '酸辣粉🌶️',
-            '凉皮🥒', '粥🥣', '馄饨🥟', '外婆味道👵',
-            '烤鱼🐟', '盖饭🍛', '胡辣汤🌶️'
+            '缇婅倝闈煃?, '楦″叕鐓拆煃?, '姹夊牎馃崝', '楦℃帓馃崡',
+            '瀵垮徃馃崳', '鍗ら潰馃崪', '涓蹭覆馃崲', '閰歌荆绮夝煂讹笍',
+            '鍑夌毊馃', '绮ヰ煡?, '棣勯エ馃', '澶栧﹩鍛抽亾馃懙',
+            '鐑ら奔馃悷', '鐩栭キ馃崨', '鑳¤荆姹ゐ煂讹笍', '鐏攨馃嵅',
+            '楹昏荆鐑煂讹笍', '鎶惃馃崟', '鐐搁浮馃崡', '鎷夐潰馃崪',
+            '楗哄瓙馃', '鐐掗キ馃崨', '绫崇嚎馃崪', '鐑х儰馃崲'
         ];
+
+        const FOOD_WEIGHTS = { '缇婅倝闈煃?: 2 };
 
         let foods = [];
         let isSpinning = false;
@@ -477,7 +620,9 @@
             '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4',
             '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F',
             '#BB8FCE', '#85C1E9', '#F8B500', '#00CED1',
-            '#FF69B4', '#32CD32', '#FFD700', '#FF6347'
+            '#FF69B4', '#32CD32', '#FFD700', '#FF6347',
+            '#9370DB', '#20B2AA', '#FF7F50', '#87CEEB',
+            '#FFA07A', '#98FB98', '#DDA0DD', '#F0E68C'
         ];
 
         const backgrounds = [
@@ -492,257 +637,232 @@
             'linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)',
             'linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)',
             'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)',
-            'linear-gradient(135deg, #cd9cf2 0%, #f6f3ff 100%)'
+            'linear-gradient(135deg, #cd9cf2 0%, #f6f3ff 100%)',
+            'linear-gradient(135deg, #fddb92 0%, #d1fdff 100%)',
+            'linear-gradient(135deg, #9890e3 0%, #b1f4cf 100%)',
+            'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
+            'linear-gradient(135deg, #96fbc4 0%, #f9f586 100%)'
         ];
 
-        const floatingEmojis = ['🍳', '🍜', '🍲', '🍱', '🍣', '🍕', '🍔', '🌮', '🥗', '🍝', '🥘', '🥙'];
+        const foodEmojis = [
+            '馃嵆', '馃崪', '馃嵅', '馃嵄', '馃崳', '馃崟', '馃崝', '馃尞',
+            '馃', '馃崫', '馃', '馃', '馃崨', '馃', '馃ァ', '馃',
+            '馃崡', '馃崠', '馃ォ', '馃尛', '馃オ', '馃カ', '馃ィ', '馃ェ',
+            '馃嵃', '馃巶', '馃', '馃崻', '鈽?, '馃嵉', '馃イ', '馃嵑'
+        ];
 
         function generateUserId() {
             let id = localStorage.getItem('wheel_user_id');
             if (!id) {
-                id = 'user_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now().toString(36);
+                id = 'u_' + Math.random().toString(36).substr(2, 8);
                 localStorage.setItem('wheel_user_id', id);
             }
             return id;
         }
 
         function loadFoods() {
-            const key = `wheel_foods_${userId}`;
-            const saved = localStorage.getItem(key);
+            const saved = localStorage.getItem(`wf_${userId}`);
             if (saved) {
-                try {
-                    foods = JSON.parse(saved);
-                } catch (e) {
-                    foods = [...DEFAULT_FOODS];
-                }
+                try { foods = JSON.parse(saved); } catch (e) { foods = [...DEFAULT_FOODS]; }
             } else {
                 foods = [...DEFAULT_FOODS];
             }
         }
 
         function saveFoods() {
-            const key = `wheel_foods_${userId}`;
-            localStorage.setItem(key, JSON.stringify(foods));
+            localStorage.setItem(`wf_${userId}`, JSON.stringify(foods));
         }
 
-        function showToast(message, duration = 3000) {
-            const existingToast = document.querySelector('.toast');
-            if (existingToast) existingToast.remove();
-            
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, duration);
+        function showToast(msg, ms = 2500) {
+            const old = document.querySelector('.toast');
+            if (old) old.remove();
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), ms);
         }
 
-        function createFloatingElements() {
-            const container = document.getElementById('floatingElements');
-            container.innerHTML = '';
-            
-            for (let i = 0; i < 15; i++) {
-                const element = document.createElement('div');
-                element.className = 'floating-element';
-                element.textContent = floatingEmojis[Math.floor(Math.random() * floatingEmojis.length)];
-                element.style.left = Math.random() * 100 + '%';
-                element.style.top = Math.random() * 100 + '%';
-                element.style.animationDelay = Math.random() * 15 + 's';
-                element.style.animationDuration = (15 + Math.random() * 10) + 's';
-                container.appendChild(element);
-            }
+        function togglePanel(id) {
+            document.getElementById(id).classList.toggle('open');
+        }
+
+        function createFloatingFoods() {
+            const c = document.getElementById('floatingFoods');
+            c.innerHTML = '';
+            const layers = ['layer-far', 'layer-mid', 'layer-near'];
+            const sizes = [[20, 28], [28, 38], [36, 50]];
+            const counts = [10, 12, 8];
+
+            layers.forEach((layer, li) => {
+                for (let i = 0; i < counts[li]; i++) {
+                    const p = document.createElement('div');
+                    p.className = `food-particle ${layer}`;
+                    p.textContent = foodEmojis[Math.floor(Math.random() * foodEmojis.length)];
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.top = Math.random() * 100 + '%';
+                    p.style.animationDelay = Math.random() * 25 + 's';
+                    p.style.animationDuration = (20 + Math.random() * 15) + 's';
+                    const [min, max] = sizes[li];
+                    p.style.fontSize = (min + Math.random() * (max - min)) + 'px';
+                    c.appendChild(p);
+                }
+            });
         }
 
         function changeBackground() {
             currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
             document.body.style.background = backgrounds[currentBgIndex];
-            
-            const indicator = document.getElementById('bgIndicator');
-            indicator.textContent = `🎨 背景已切换 (${currentBgIndex + 1}/${backgrounds.length})`;
-            
-            setTimeout(() => {
-                indicator.textContent = '🎨 背景自动切换中...';
-            }, 3000);
+            const tag = document.getElementById('bgTag');
+            tag.textContent = `馃帹 ${currentBgIndex + 1}/${backgrounds.length}`;
+            setTimeout(() => { tag.textContent = '馃帹 鑷姩鎹㈣偆'; }, 3000);
         }
 
         function createWheel() {
             const wheel = document.getElementById('wheel');
             wheel.innerHTML = '';
-            
-            const segmentAngle = 360 / foods.length;
-            
-            foods.forEach((food, index) => {
-                const segment = document.createElement('div');
-                segment.className = 'wheel-segment';
-                segment.style.background = colors[index % colors.length];
-                segment.style.transform = `rotate(${index * segmentAngle - 90}deg) skewY(${-(90 - segmentAngle)}deg)`;
-                
-                const text = document.createElement('span');
-                text.textContent = food;
-                text.style.transform = `skewY(${90 - segmentAngle}deg) rotate(${segmentAngle / 2}deg)`;
-                
-                segment.appendChild(text);
-                wheel.appendChild(segment);
+            const angle = 360 / foods.length;
+
+            foods.forEach((food, i) => {
+                const seg = document.createElement('div');
+                seg.className = 'wheel-segment';
+                seg.style.background = colors[i % colors.length];
+                seg.style.transform = `rotate(${i * angle - 90}deg) skewY(${-(90 - angle)}deg)`;
+                const txt = document.createElement('span');
+                txt.textContent = food;
+                txt.style.transform = `skewY(${90 - angle}deg) rotate(${angle / 2}deg)`;
+                seg.appendChild(txt);
+                wheel.appendChild(seg);
             });
-            
+
             updateFoodListDisplay();
         }
 
         function updateFoodListDisplay() {
-            const display = document.getElementById('foodListDisplay');
-            display.innerHTML = foods.map((food, index) => 
-                `<span class="food-item">
-                    ${food}
-                    <button class="delete-btn" onclick="deleteFood(${index})" title="删除">×</button>
-                </span>`
+            const d = document.getElementById('foodListDisplay');
+            d.innerHTML = foods.map((f, i) =>
+                `<div class="food-chip"><span>${f}</span><button class="del-btn" onclick="deleteFood(${i})">脳</button></div>`
             ).join('');
         }
 
-        function deleteFood(index) {
-            if (foods.length <= 2) {
-                showToast('⚠️ 至少需要保留2个食物选项！');
-                return;
-            }
-            
-            const deletedFood = foods[index];
-            foods.splice(index, 1);
+        function deleteFood(i) {
+            if (foods.length <= 2) { showToast('鈿狅笍 鑷冲皯淇濈暀2涓?); return; }
+            const f = foods[i];
+            foods.splice(i, 1);
             saveFoods();
             createWheel();
-            showToast(`🗑️ 已删除：${deletedFood}`);
+            showToast(`馃棏锔?${f}`);
         }
 
         function spin() {
             if (isSpinning || foods.length === 0) return;
-            
             isSpinning = true;
-            const spinBtn = document.getElementById('spinBtn');
-            const result = document.getElementById('result');
-            
-            spinBtn.disabled = true;
-            result.textContent = '🎰 转动中...';
-            result.classList.remove('highlight');
-            
-            const randomIndex = Math.floor(Math.random() * foods.length);
-            const segmentAngle = 360 / foods.length;
-            
-            const targetAngle = 360 - (randomIndex * segmentAngle + segmentAngle / 2);
+            const btn = document.getElementById('spinBtn');
+            const res = document.getElementById('result');
+            btn.disabled = true;
+            res.textContent = '馃幇 杞姩涓?..';
+            res.classList.remove('highlight');
+
+            const ri = weightedRandomIndex();
+            const angle = 360 / foods.length;
+            const target = 360 - (ri * angle + angle / 2);
             const spins = 5 + Math.floor(Math.random() * 3);
-            const totalRotation = spins * 360 + targetAngle;
-            
-            currentRotation += totalRotation;
-            
-            const wheel = document.getElementById('wheel');
-            wheel.style.transform = `rotate(${currentRotation}deg)`;
-            
+            currentRotation += spins * 360 + target;
+
+            document.getElementById('wheel').style.transform = `rotate(${currentRotation}deg)`;
+
             setTimeout(() => {
-                result.textContent = `🎉 今天吃：${foods[randomIndex]}！`;
-                result.classList.add('highlight');
-                spinBtn.disabled = false;
+                res.textContent = `馃帀 浠婂ぉ鍚?${foods[ri]}锛乣;
+                res.classList.add('highlight');
+                btn.disabled = false;
                 isSpinning = false;
             }, 4000);
         }
 
+        function weightedRandomIndex() {
+            const w = foods.map(f => FOOD_WEIGHTS[f] || 1);
+            const total = w.reduce((s, v) => s + v, 0);
+            let r = Math.random() * total;
+            for (let i = 0; i < w.length; i++) {
+                r -= w[i];
+                if (r <= 0) return i;
+            }
+            return foods.length - 1;
+        }
+
         function addFood() {
-            const input = document.getElementById('newFoodInput');
-            const newFood = input.value.trim();
-            
-            if (newFood && !foods.includes(newFood)) {
-                foods.push(newFood);
+            const inp = document.getElementById('newFoodInput');
+            const v = inp.value.trim();
+            if (v && !foods.includes(v)) {
+                foods.push(v);
                 saveFoods();
                 createWheel();
-                input.value = '';
-                showToast(`✅ 已添加：${newFood}`);
-            } else if (foods.includes(newFood)) {
-                showToast('⚠️ 这个食物已经在列表中了！');
+                inp.value = '';
+                showToast(`鉁?${v}`);
+            } else if (foods.includes(v)) {
+                showToast('鈿狅笍 宸插瓨鍦?);
             } else {
-                showToast('⚠️ 请输入食物名称！');
+                showToast('鈿狅笍 璇疯緭鍏ュ悕绉?);
             }
         }
 
         function resetFoods() {
-            if (confirm('确定要重置为默认食物列表吗？\n\n这将只影响你自己的数据。')) {
+            if (confirm('閲嶇疆涓洪粯璁ゅ垪琛紵')) {
                 foods = [...DEFAULT_FOODS];
                 saveFoods();
                 createWheel();
-                showToast('🔄 已重置为默认列表');
+                showToast('馃攧 宸查噸缃?);
             }
         }
 
         function exportConfig() {
-            const config = {
-                version: '1.0',
-                exportTime: new Date().toISOString(),
-                userId: userId,
-                foods: foods,
-                note: '琳蔓の🍳 美食转盘配置文件'
-            };
-            
-            const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+            const cfg = { version: '3.0', time: new Date().toISOString(), foods, note: '鐞宠敁銇煃? };
+            const blob = new Blob([JSON.stringify(cfg, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `琳蔓美食转盘_${userId}_${new Date().toISOString().slice(0,10)}.json`;
+            a.download = `鐞宠敁缇庨_${new Date().toISOString().slice(0, 10)}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            
-            showToast('📤 配置已导出！');
+            showToast('馃摛 宸插鍑?);
         }
 
         function importConfig(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 try {
-                    const config = JSON.parse(e.target.result);
-                    
-                    if (!config.foods || !Array.isArray(config.foods)) {
-                        throw new Error('无效的配置文件格式');
-                    }
-                    
-                    if (confirm(`确定要导入配置吗？\n\n包含 ${config.foods.length} 个食物项\n\n这将替换你当前的食物列表。`)) {
-                        foods = config.foods;
+                    const cfg = JSON.parse(e.target.result);
+                    if (!cfg.foods || !Array.isArray(cfg.foods)) throw new Error('鏍煎紡閿欒');
+                    if (confirm(`瀵煎叆 ${cfg.foods.length} 椤癸紵`)) {
+                        foods = cfg.foods;
                         saveFoods();
                         createWheel();
-                        showToast(`📥 成功导入 ${foods.length} 个食物项！`);
+                        showToast(`馃摜 ${foods.length} 椤瑰凡瀵煎叆`);
                     }
-                } catch (error) {
-                    showToast('❌ 导入失败：' + error.message);
+                } catch (err) {
+                    showToast('鉂?' + err.message);
                 }
             };
             reader.readAsText(file);
-            
             event.target.value = '';
         }
 
-        document.getElementById('newFoodInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addFood();
-            }
+        document.getElementById('newFoodInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') addFood();
         });
 
         userId = generateUserId();
-        document.getElementById('userInfo').textContent = `👤 用户ID：${userId}`;
-        
         loadFoods();
-        createFloatingElements();
+        createFloatingFoods();
         document.body.style.background = backgrounds[0];
         createWheel();
-        
-        setInterval(changeBackground, 4 * 60 * 60 * 1000);
-        
-        setInterval(() => {
-            createFloatingElements();
-        }, 60000);
 
-        console.log('%c🍳 琳蔓の美食转盘', 'font-size: 24px; font-weight: bold; color: #667eea;');
-        console.log('%c你的用户ID:', 'font-size: 14px; color: #333;', userId);
-        console.log('%c数据完全独立存储在你的浏览器中', 'font-size: 12px; color: #666;');
+        setInterval(changeBackground, 4 * 60 * 60 * 1000);
+        setInterval(createFloatingFoods, 180000);
     </script>
 </body>
 </html>
